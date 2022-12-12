@@ -12,13 +12,25 @@ import bridge.view.OutputView;
 import java.util.function.Supplier;
 
 public class BridgeController {
-    private final InputView inputView = new InputView();
-    private final OutputView outputView = new OutputView();
-    private final BridgeGame bridgeGame = new BridgeGame();
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final BridgeGame bridgeGame;
 
     private Bridge bridge;
 
-    public void startGame() {
+    public BridgeController() {
+        inputView = new InputView();
+        outputView = new OutputView();
+        bridgeGame = new BridgeGame();
+    }
+
+    public void run() {
+        startGame();
+        playGame();
+        quitGame();
+    }
+
+    private void startGame() {
         BridgeNumberGenerator numberGenerator = new BridgeRandomNumberGenerator();
         BridgeMaker bridgeMaker = new BridgeMaker(numberGenerator);
 
@@ -27,7 +39,7 @@ public class BridgeController {
         bridge = new Bridge(bridgeMaker.makeBridge(bridgeSize));
     }
 
-    public void playGame() {
+    private void playGame() {
         do {
             String moving = repeat(inputView::readMoving);
             bridgeGame.move(moving, bridge.findBlockByIndex(bridgeGame.getMovingCount()));
@@ -51,7 +63,7 @@ public class BridgeController {
         return false;
     }
 
-    public void quitGame() {
+    private void quitGame() {
         outputView.printResult(bridgeGame);
     }
 

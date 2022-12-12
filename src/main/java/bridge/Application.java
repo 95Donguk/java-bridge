@@ -6,8 +6,6 @@ public class Application {
 
     public static void main(String[] args) {
         BridgeController bridgeController = new BridgeController();
-        bridgeController.startGame();
-        bridgeController.playGame();
-        bridgeController.quitGame();
+        bridgeController.run();
     }
 }
