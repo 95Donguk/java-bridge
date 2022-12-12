@@ -23,45 +23,33 @@ public class InputView {
      * 다리의 길이를 입력받는다.
      */
     public int readBridgeSize() {
-        try {
-            Validator bridgeSizeValidator = new BridgeSizeValidator();
-            System.out.println(INPUT_BRIDGE_SIZE.getMessage());
-            String bridgeSize = Console.readLine();
-            bridgeSizeValidator.validate(bridgeSize);
-            return Integer.parseInt(bridgeSize);
-        } catch (IllegalArgumentException exception) {
-            return readBridgeSize();
-        }
+        Validator bridgeSizeValidator = new BridgeSizeValidator();
+        System.out.println(INPUT_BRIDGE_SIZE.getMessage());
+        String bridgeSize = Console.readLine();
+        bridgeSizeValidator.validate(bridgeSize);
+        return Integer.parseInt(bridgeSize);
     }
 
     /**
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMoving() {
-        try {
-            Validator movingValidator = new MovingValidator();
-            System.out.println("\n" + String.format(INPUT_MOVING.getMessage(), UP.getCommand(), DOWN.getCommand()));
-            String moving = Console.readLine();
-            movingValidator.validate(moving);
-            return moving;
-        } catch (IllegalArgumentException exception) {
-            return readMoving();
-        }
+        Validator movingValidator = new MovingValidator();
+        System.out.println("\n" + String.format(INPUT_MOVING.getMessage(), UP.getCommand(), DOWN.getCommand()));
+        String moving = Console.readLine();
+        movingValidator.validate(moving);
+        return moving;
     }
 
     /**
      * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
      */
     public String readGameCommand() {
-        try {
-            Validator gameCommandValidator = new GameCommandValidator();
-            System.out.println(
-                    "\n" + String.format(INPUT_GAME_COMMAND.getMessage(), RETRY.getCommand(), QUIT.getCommand()));
-            String gameCommand = Console.readLine();
-            gameCommandValidator.validate(gameCommand);
-            return gameCommand;
-        } catch (IllegalArgumentException exception) {
-            return readGameCommand();
-        }
+        Validator gameCommandValidator = new GameCommandValidator();
+        System.out.println(
+                "\n" + String.format(INPUT_GAME_COMMAND.getMessage(), RETRY.getCommand(), QUIT.getCommand()));
+        String gameCommand = Console.readLine();
+        gameCommandValidator.validate(gameCommand);
+        return gameCommand;
     }
 }

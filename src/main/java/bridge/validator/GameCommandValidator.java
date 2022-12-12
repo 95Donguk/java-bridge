@@ -16,15 +16,13 @@ public class GameCommandValidator implements Validator {
 
     private void checkBlankValue(String inputValue) {
         if (inputValue.isBlank()) {
-            System.out.println(BLANK_VALUE.getMessage());
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(BLANK_VALUE.getMessage());
         }
     }
 
     private void checkLowercaseValue(String inputValue) {
         if (isLowercaseValue(inputValue)) {
-            System.out.println(LOWERCASE_VALUE.getMessage());
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(LOWERCASE_VALUE.getMessage());
         }
     }
 
@@ -34,8 +32,7 @@ public class GameCommandValidator implements Validator {
 
     private void checkInvalidGameCommand(String inputValue) {
         if (!isValidGameCommand(inputValue)) {
-            System.out.println(INVALID_VALUE.getMessage());
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(INVALID_VALUE.getMessage());
         }
     }
 

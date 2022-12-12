@@ -94,4 +94,8 @@ public class OutputView {
     public void printGameStart() {
         System.out.println(GAME_START.getMessage() + "\n");
     }
+
+    public void printErrorMessage(String message) {
+        System.out.println(message);
+    }
 }

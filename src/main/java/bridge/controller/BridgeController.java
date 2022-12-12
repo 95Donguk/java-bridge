@@ -9,6 +9,7 @@ import bridge.domain.Bridge;
 import bridge.domain.BridgeGame;
 import bridge.view.InputView;
 import bridge.view.OutputView;
+import java.util.function.Supplier;
 
 public class BridgeController {
     private final InputView inputView = new InputView();
@@ -22,12 +23,14 @@ public class BridgeController {
         BridgeMaker bridgeMaker = new BridgeMaker(numberGenerator);
 
         outputView.printGameStart();
-        bridge = new Bridge(bridgeMaker.makeBridge(inputView.readBridgeSize()));
+        int bridgeSize = repeat(inputView::readBridgeSize);
+        bridge = new Bridge(bridgeMaker.makeBridge(bridgeSize));
     }
 
     public void playGame() {
         do {
-            bridgeGame.move(inputView.readMoving(), bridge.findBlockByIndex(bridgeGame.getMovingCount()));
+            String moving = repeat(inputView::readMoving);
+            bridgeGame.move(moving, bridge.findBlockByIndex(bridgeGame.getMovingCount()));
             outputView.printMap(bridgeGame);
         } while (canMove());
     }
@@ -40,7 +43,7 @@ public class BridgeController {
     }
 
     private boolean choiceRetryOrQuit() {
-        String gameCommand = inputView.readGameCommand();
+        String gameCommand = repeat(inputView::readGameCommand);
         if (RETRY.equalCommand(gameCommand)) {
             bridgeGame.retry();
             return true;
@@ -50,5 +53,14 @@ public class BridgeController {
 
     public void quitGame() {
         outputView.printResult(bridgeGame);
+    }
+
+    private <T> T repeat(Supplier<T> inputReader) {
+        try {
+            return inputReader.get();
+        } catch (IllegalArgumentException exception) {
+            outputView.printErrorMessage(exception.getMessage());
+            return repeat(inputReader);
+        }
     }
 }
