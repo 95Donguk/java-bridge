@@ -1,15 +1,13 @@
 package bridge.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
  * 다리 건너기 게임을 관리하는 클래스
  */
 public class BridgeGame {
-    private final List<String> movingData = new ArrayList<>();
-    private final List<Boolean> movingResults = new ArrayList<>();
+    private final MovingData movingData = new MovingData();
+    private final MovingResult movingResult = new MovingResult();
 
     private int totalAttempts = 1;
 
@@ -22,8 +20,8 @@ public class BridgeGame {
      * @param block
      */
     public void move(String moving, String block) {
-        movingData.add(moving);
-        movingResults.add(Objects.equals(moving, block));
+        movingData.addData(moving);
+        movingResult.addResult(Objects.equals(moving, block));
     }
 
     /**
@@ -33,31 +31,31 @@ public class BridgeGame {
      */
     public void retry() {
         movingData.clear();
-        movingResults.clear();
+        movingResult.clear();
         totalAttempts++;
     }
 
     public String findMovingByIndex(int index) {
-        return movingData.get(index);
+        return movingData.findByIndex(index);
     }
 
     public Boolean findMovingResultByIndex(int index) {
-        return movingResults.get(index);
+        return movingResult.findByIndex(index);
     }
 
     public int getMovingCount() {
-        return movingResults.size();
+        return movingData.getMovingCount();
+    }
+
+    public boolean canMoveMoreBlock(int length) {
+        return length > getMovingCount();
     }
 
     public int getTotalAttempts() {
         return totalAttempts;
     }
 
-    public boolean canMoveMoreBlock(int length) {
-        return length > movingData.size();
-    }
-
     public boolean isMovingFail() {
-        return movingResults.contains(false);
+        return movingResult.hasFail();
     }
 }
